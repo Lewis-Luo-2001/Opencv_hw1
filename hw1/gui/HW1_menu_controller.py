@@ -214,12 +214,44 @@ class MainWindow_controller(QtWidgets.QMainWindow):
 
 
 
-    #------------ Q3 ------------#
+    #------------ Q4 ------------#
     def buttonClicked_4_1(self):
-        pass
+        img = cv2.imread('..\src\Q4_image\SQUARE-01.png')
+        img_resize = cv2.resize(img, (256, 256), interpolation=cv2.INTER_AREA)
+        
+        # cv2.imshow("4.1 SQUARE-01.png", img)
+        cv2.imshow("4.1 Resize", img_resize)
+    
     def buttonClicked_4_2(self):
-        pass
+        img = cv2.imread('..\src\Q4_image\SQUARE-01.png')
+        img_resize = cv2.resize(img, (256, 256), interpolation=cv2.INTER_AREA)
+
+        M = np.float32([[1, 0, 0], [0, 1, 60]]) # x->x y->y+60
+        img_translation = cv2.warpAffine(img_resize, M, (400, 300))
+        cv2.imshow("4.2 Translation", img_translation)
+
     def buttonClicked_4_3(self):
-        pass
+        img = cv2.imread('..\src\Q4_image\SQUARE-01.png')
+        img_resize = cv2.resize(img, (256, 256), interpolation=cv2.INTER_AREA)
+
+        M = np.float32([[1, 0, 0], [0, 1, 60]]) # x->x y->y+60
+        img_translation = cv2.warpAffine(img_resize, M, (400, 300))
+
+        M = cv2.getRotationMatrix2D((img_translation.shape[0] / 2, img_translation.shape[1] / 2), 10, 0.5)
+        img_rotation_scaling = cv2.warpAffine(img_translation, M, (400, 300))
+        cv2.imshow("4.3 Rotation Scaling", img_rotation_scaling)
+
     def buttonClicked_4_4(self):
-        pass
+        img = cv2.imread('..\src\Q4_image\SQUARE-01.png')
+        img_resize = cv2.resize(img, (256, 256), interpolation=cv2.INTER_AREA)
+
+        M = np.float32([[1, 0, 0], [0, 1, 60]]) # x->x y->y+60
+        img_translation = cv2.warpAffine(img_resize, M, (400, 300))
+
+        M = cv2.getRotationMatrix2D((img_translation.shape[0] / 2, img_translation.shape[1] / 2), 10, 0.5)
+        img_rotation_scaling = cv2.warpAffine(img_translation, M, (400, 300))
+        print(img_rotation_scaling.shape)
+        M = cv2.getAffineTransform(np.float32([[50, 50], [200, 50], [50, 200]]), np.float32([[10, 100], [200, 50], [100, 250]]))
+        img_shearing = cv2.warpAffine(img_rotation_scaling, M, (400, 300))
+        
+        cv2.imshow("4.4 Shearing", img_shearing)
